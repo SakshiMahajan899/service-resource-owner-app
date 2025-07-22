@@ -13,15 +13,18 @@ spring:
 #appUserName: user
 #password: password
 #
+
   data:
     mongodb:
-      uri: mongodb://localhost:27017/service_manager_db
+      uri: mongodb://admin:password@mongo-service:27017/service_manager_dev?authSource=admin
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
+
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info
 #  endpoint:
 #    health:
 #      show-details: always  # or "when-authorized"
