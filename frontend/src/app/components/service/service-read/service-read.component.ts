@@ -16,14 +16,9 @@ export class ServiceReadComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
    readServiceById(): void {
       this.serviceManager.readById(this.serviceId).subscribe((service) => {
              this.service = service;
            });
     }
-
-
-
-
 }
