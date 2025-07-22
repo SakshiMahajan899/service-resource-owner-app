@@ -1,0 +1,29 @@
+
+<mat-card>
+  <mat-card-title>🔍 Search Service by ID</mat-card-title>
+
+  <form #lookupForm="ngForm" (ngSubmit)="readServiceById()">
+    <mat-form-field appearance="fill">
+      <mat-label>Service ID</mat-label>
+      <input matInput [(ngModel)]="serviceId" name="serviceId" required />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Fetch Service</button>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="service">
+  <mat-card-title>📦 Service Details</mat-card-title>
+  <p><strong>ID:</strong> {{ service.id }}</p>
+
+  <div *ngFor="let resource of service.resources">
+    <mat-divider></mat-divider>
+    <h3>🔗 Resource ID: {{ resource.id }}</h3>
+    <ul>
+      <li *ngFor="let owner of resource.owners">
+        {{ owner.name }} ({{ owner.accountNumber }}) — Level {{ owner.level }}
+      </li>
+    </ul>
+  </div>
+</mat-card>
+

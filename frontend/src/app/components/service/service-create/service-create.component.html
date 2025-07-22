@@ -1,0 +1,88 @@
+<mat-card>
+  <mat-card-title>Create Service</mat-card-title>
+  <form #serviceForm="ngForm">
+    <!-- Service ID -->
+<!--    <mat-form-field appearance="fill">-->
+      <mat-card-subtitle>Service </mat-card-subtitle>
+<!--      <input matInput [(ngModel)]="service.id" name="serviceId" required />-->
+<!--    </mat-form-field>-->
+
+    <!-- Resources -->
+    <div *ngFor="let resource of service.resources; let resIdx = index">
+<!--      <mat-divider></mat-divider>-->
+      <mat-card-subtitle>Resource {{ resIdx + 1 }}</mat-card-subtitle>
+
+      <!-- Resource ID -->
+<!--      <mat-form-field appearance="fill">-->
+<!--        <mat-label>Resource ID</mat-label>-->
+<!--        <input-->
+<!--                matInput-->
+<!--                [(ngModel)]="resource.id"-->
+<!--                name="resourceId{{ resIdx }}"-->
+<!--                required-->
+<!--        />-->
+<!--      </mat-form-field>-->
+
+      <!-- Owners -->
+      <div *ngFor="let owner of resource.owners; let ownerIdx = index">
+        <mat-card-subtitle>Owner {{ ownerIdx + 1 }}</mat-card-subtitle>
+
+<!--        <mat-form-field appearance="fill">-->
+<!--          <mat-label>Owner ID</mat-label>-->
+<!--          <input-->
+<!--                  matInput-->
+<!--                  [(ngModel)]="owner.id"-->
+<!--                  name="ownerId{{ resIdx }}_{{ ownerIdx }}"-->
+<!--                  required-->
+<!--          />-->
+<!--        </mat-form-field>-->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Owner Name</mat-label>
+          <input
+                  matInput
+                  [(ngModel)]="owner.name"
+                  name="ownerName{{ resIdx }}_{{ ownerIdx }}"
+                  required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Account Number</mat-label>
+          <input
+                  matInput
+                  [(ngModel)]="owner.accountNumber"
+                  name="accountNumber{{ resIdx }}_{{ ownerIdx }}"
+                  required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Level</mat-label>
+          <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="owner.level"
+                  name="ownerLevel{{ resIdx }}_{{ ownerIdx }}"
+                  required
+          />
+        </mat-form-field>
+      </div>
+
+      <button mat-stroked-button color="accent" (click)="addOwner(resIdx)">
+        + Add Owner
+      </button>
+    </div>
+
+    <button mat-stroked-button color="accent" (click)="addResource()">
+      + Add Resource
+    </button>
+
+    <div style="margin-top: 1rem">
+      <button mat-raised-button color="primary" (click)="createService()">
+        Save Service
+      </button>
+      <button mat-button (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</mat-card>
