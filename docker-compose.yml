@@ -26,7 +26,6 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATA_MONGODB_URI=mongodb://admin:password@mongo-service:27017/service_manager_dev?authSource=admin
-
     depends_on:
       - mongodb
     networks:
@@ -34,16 +33,15 @@ services:
 
   frontend-app:
     build:
-      context: ./frontend  # Path to your Angular project root
-      dockerfile: Dockerfile  # You’ll need to define this Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: frontend-app
     ports:
-      - "4200:80"  # Or "80:80" if using nginx
+      - "4200:80"
     depends_on:
       - backend-app
     networks:
       - app-network
-
 
 networks:
   app-network:

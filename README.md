@@ -24,10 +24,13 @@ A Spring Boot RESTful backend combined with an Angular frontend to manage hierar
 |--------------|-------------------------------|
 | Backend      | Spring Boot 3.x               |
 | Database     | MongoDb                       |
-| Frontend     | Angular 17 + Angular Material |
+| Frontend     | Angular  |
 | Build Tool   | Maven                         |
 | CI/CD        | GitHub Actions                |
-| Container    | Docker, Docker Compose        |
+| Container    | Docker, Docker Compose       
+|Documentation | OpenApi Documentation
+|Logging       | SLF4J
+|Testing|Mockito,Junit,Jasmine,Karma
 
 ---
 
