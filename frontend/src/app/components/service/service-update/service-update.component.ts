@@ -42,12 +42,12 @@ enteredId: number;
   updateService(): void {
     this.serviceManager.update(this.service).subscribe(() => {
       this.serviceManager.showMessage("Service updated successfully!");
-      this.router.navigate(["/services"]);
+      this.router.navigate(["/services/update"]);
     });
   }
 
   cancel(): void {
-    this.router.navigate(["/services"]);
+    this.router.navigate([""]);
   }
   service: Service = {
     id: '',

@@ -20,13 +20,8 @@ export class ServiceCreateComponent implements OnInit {
      */
 
   createService(): void {
-//     if (!this.service.id.trim()) {
-//       this.serviceManager.showMessage("Please enter a valid Service Details !!!");
-//       return;
-//     }
 
     const hasValidOwners = this.service.resources.some(resource =>
-//       resource.id.trim() &&
       resource.owners.some(owner =>
         owner.name.trim() && owner.accountNumber.trim()
       )
@@ -39,13 +34,13 @@ export class ServiceCreateComponent implements OnInit {
 
     this.serviceManager.create(this.service).subscribe(() => {
       this.serviceManager.showMessage("Service created!");
-      this.router.navigate(["/services"]);
+      this.router.navigate(["/services/create"]);
     });
   }
 
 
   cancel(): void {
-    this.router.navigate(["/services"]);
+    this.router.navigate([""]);
   }
 
 service = {
