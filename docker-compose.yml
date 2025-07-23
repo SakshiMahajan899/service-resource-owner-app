@@ -9,7 +9,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: service_manager_dev
+      MONGO_INITDB_DATABASE: service_manager
     volumes:
       - mongo-data:/data/db
       - ./init/init.js:/docker-entrypoint-initdb.d/init.js
@@ -25,11 +25,23 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:password@mongo-service:27017/service_manager_dev?authSource=admin
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:password@mongo-service:27017/service_manager?authSource=admin
     depends_on:
       - mongodb
     networks:
       - app-network
+
+  go-client:
+    build:
+      context: ./go-client
+      dockerfile: Dockerfile
+    container_name: go-client
+    depends_on:
+      - backend-app
+      - mongodb
+    networks:
+      - app-network
+    command: ["sleep", "infinity"]
 
   frontend-app:
     build:

@@ -1,4 +1,4 @@
-db = db.getSiblingDB('service_manager_dev');
+db = db.getSiblingDB('service_manager');
 
 db.service.insertOne({
   id: "service_id_1",
