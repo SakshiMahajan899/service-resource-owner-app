@@ -14,8 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Service layer for handling business logic related to {@link Service} entities.
@@ -50,27 +54,12 @@ public class ServiceManager {
 
         service.setId(serviceId);
 
-        List<Resource> updatedResources = new ArrayList<>();
-        List<Resource> inputResources = service.getResources() != null ? service.getResources() : new ArrayList<>();
+        List<Resource> inputResources = Optional.ofNullable(service.getResources())
+                .orElse(Collections.emptyList());
 
-        for (int i = 0; i < inputResources.size(); i++) {
-            Resource res = inputResources.get(i);
-            String resId = idGenerator.generateResourceId(serviceIndex, i + 1);
-            res.setId(resId);
-
-            List<Owner> updatedOwners = new ArrayList<>();
-            List<Owner> inputOwners = res.getOwners() != null ? res.getOwners() : new ArrayList<>();
-
-            for (int j = 0; j < inputOwners.size(); j++) {
-                Owner owner = inputOwners.get(j);
-                String ownerId = idGenerator.generateOwnerId(serviceIndex, i + 1, j + 1);
-                owner.setId(ownerId);
-                updatedOwners.add(owner);
-            }
-
-            res.setOwners(updatedOwners);
-            updatedResources.add(res);
-        }
+        List<Resource> updatedResources = IntStream.range(0, inputResources.size())
+                .mapToObj(i -> updateResource(inputResources.get(i), serviceIndex, i + 1))
+                .collect(Collectors.toList());
 
         service.setResources(updatedResources);
 
@@ -80,6 +69,27 @@ public class ServiceManager {
         logger.info("New Service created with generated id: {}", saved.getId());
         return saved;
     }
+
+    private Resource updateResource(Resource resource, int serviceIndex, int resourceIndex) {
+        resource.setId(idGenerator.generateResourceId(serviceIndex, resourceIndex));
+
+        List<Owner> inputOwners = Optional.ofNullable(resource.getOwners())
+                .orElse(Collections.emptyList());
+
+        List<Owner> updatedOwners = IntStream.range(0, inputOwners.size())
+                .mapToObj(j -> updateOwner(inputOwners.get(j), serviceIndex, resourceIndex, j + 1))
+                .collect(Collectors.toList());
+
+        resource.setOwners(updatedOwners);
+        return resource;
+    }
+
+    private Owner updateOwner(Owner owner, int serviceIndex, int resourceIndex, int ownerIndex) {
+        owner.setId(idGenerator.generateOwnerId(serviceIndex, resourceIndex, ownerIndex));
+        return owner;
+    }
+
+
 
     public Service updateService(String id, Service updated) {
         logger.info("Attempting to update Service with id: {}", id);
