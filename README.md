@@ -47,7 +47,7 @@ A full-stack system combining a Spring Boot RESTful backend with an Angular fron
 
 ---
 
-### 🐳 Local Setup
+### 🐳 Local Setup to start application
 
 ```bash
 git clone https://github.com/SakshiMahajan899/service-resource-owner-app.git
